@@ -34,7 +34,7 @@
 #include <lmic.h>
 #include <hal/hal.h>
 #include <SPI.h>
-#include "LowPower.h"
+
 
 #define VBATPIN 9
 
@@ -184,27 +184,11 @@ void onEvent (ev_t ev) {
               Serial.println(LMIC.dataLen);
               Serial.println(F(" bytes of payload"));
             }
-            delay(1000); //Allow Serial buffer to finish writing println()s
 
             // 32u4 can only sleep for a maxium of 8 seconds. So a loop is run to keep putting it to sleep for 8 more seconds
             // 100 about 15 min with 8 sec
             // 400 hour
             // 2400 4 hours
-
-            
-            USBDevice.detach();
-            for(int i=0;i<1;i++)  {
-               LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);
-            }
-
-            // Attach USB interface
-            USBDevice.attach();
-            // Wait for serial USB port to open
-            while(!Serial);
-            //Serial.begin(9600);
-            Serial.println(F("Woke"));
-
-
             
             // Schedule next transmission
             os_setCallback(&sendjob, do_send);
