@@ -191,8 +191,7 @@ void onEvent (ev_t ev) {
             // 2400 4 hours
             
             // Schedule next transmission
-            os_setCallback(&sendjob, do_send);
-            //os_setTimedCallback(&sendjob, os_getTime()+sec2osticks(TX_INTERVAL), do_send);
+            os_setTimedCallback(&sendjob, os_getTime()+sec2osticks(TX_INTERVAL), do_send);
             break;
         case EV_LOST_TSYNC:
             Serial.println(F("EV_LOST_TSYNC"));
